@@ -3,7 +3,7 @@
 \*-----------------------------------*/
 
 /**
- * copyright 2022 codewithsadee
+ * copyright 2023 code with Team
  */
 
 
@@ -1296,3 +1296,8 @@ address {
   .container { max-width: 1180px; }
 
 }
+/* img:last-child{
+  size: cover;
+  width: 550px;
+  height: 250px;
+} */

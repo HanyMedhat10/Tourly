@@ -1,13 +1,14 @@
 <?php
 session_start();
 require_once './config/config.php';
-require_once 'includes/auth_validate.php';
-
+// require_once 'includes/auth_validate.php';
+// if($_SESSION["isLogin"]==true) header('Location:login.php');
 //Get DB instance. function is defined in config.php
-$db = getDbInstance();
-
-//Get Dashboard information
-$numCustomers = $db->getValue ("customers", "count(*)");
+$connect = getDbInstance();
+if(isset($_SESSION['username']) && $_SESSION['username']==null)header('Location:login.php');
+$query="SELECT * FROM `customer`";
+$result=mysqli_query($connect,$query);
+$numCustomers=mysqli_num_rows($result);
 
 include_once('includes/header.php');
 ?>

@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once 'config/config.php';
-require_once BASE_PATH . '/includes/auth_validate.php';
 
 // Costumers class
 require_once BASE_PATH . '/lib/Costumers/Costumers.php';
@@ -13,7 +12,7 @@ $filter_col = filter_input(INPUT_GET, 'filter_col');
 $order_by = filter_input(INPUT_GET, 'order_by');
 
 // Per page limit for pagination.
-$pagelimit = 15;
+$pageLimit = 15;
 
 // Get current page.
 $page = filter_input(INPUT_GET, 'page');
@@ -28,29 +27,38 @@ if (!$filter_col) {
 if (!$order_by) {
 	$order_by = 'Desc';
 }
+function paginationLinks($current_page, $total_pages, $base_url) {
 
+	if ($total_pages <= 1) {
+		return false;
+	}
 //Get DB instance. i.e instance of MYSQLiDB Library
-$db = getDbInstance();
-$select = array('id', 'f_name', 'l_name', 'gender', 'phone', 'created_at', 'updated_at');
-
+$connect = getDbInstance();
+$query = 'SELECT `ID`, `username`, `email`, `phone`, `NoOfGuest` FROM `customer` WHERE ';
+$result=mysqli_query($connect,$query);
 //Start building query according to input parameters.
 // If search string
 if ($search_string) {
-	$db->where('f_name', '%' . $search_string . '%', 'like');
-	$db->orwhere('l_name', '%' . $search_string . '%', 'like');
+    // search string name
+    $searchQ="SELECT `ID`, `username`, `email`, `phone`, `NoOfGuest` FROM `customer` WHERE `username` LIKE '$search_string'";
+    $result=mysqli_query($connect,$searchQ);
+
+    // $db->orwhere('l_name', '%' . $search_string . '%', 'like');
 }
 
-//If order by option selected
+// If order by option selected
 if ($order_by) {
-	$db->orderBy($filter_col, $order_by);
+    $orderQ="SELECT `ID`, `username`, `email`, `phone`, `NoOfGuest` FROM `customer` ORDER BY $filter_col $order_by";
+
 }
 
 // Set pagination limit
-$db->pageLimit = $pagelimit;
+// $db->pageLimit = $pagelimit;
 
 // Get result of the query.
-$rows = $db->arraybuilder()->paginate('customers', $page, $select);
-$total_pages = $db->totalPages;
+$noRows=mysqli_num_rows($result);
+$rows = $result;
+$total_pages = $noRows/$pageLimit;
 
 include BASE_PATH . '/includes/header.php';
 ?>
@@ -72,7 +80,7 @@ include BASE_PATH . '/includes/header.php';
     <div class="well text-center filter-form">
         <form class="form form-inline" action="">
             <label for="input_search">Search</label>
-            <input type="text" class="form-control" id="input_search" name="search_string" value="<?php echo xss_clean($search_string); ?>">
+            <input type="text" class="form-control" id="input_search" name="search_string">
             <label for="input_order">Order By</label>
             <select name="filter_col" class="form-control">
                 <?php
@@ -98,41 +106,35 @@ if ($order_by == 'Desc') {
         </form>
     </div>
     <hr>
-    <!-- //Filters -->
-
-
     <div id="export-section">
         <a href="export_customers.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
     </div>
-
-    <!-- Table -->
     <table class="table table-striped table-bordered table-condensed">
         <thead>
             <tr>
                 <th width="5%">ID</th>
                 <th width="45%">Name</th>
-                <th width="20%">Gender</th>
+                <th width="20%">Email</th>
                 <th width="20%">Phone</th>
-                <th width="10%">Actions</th>
+                <th width="10%">NO Of Guest</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($rows as $row): ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
-                <td><?php echo xss_clean($row['f_name'] . ' ' . $row['l_name']); ?></td>
-                <td><?php echo xss_clean($row['gender']); ?></td>
-                <td><?php echo xss_clean($row['phone']); ?></td>
+                <td><?php echo $row['username'] ?></td>
+                <td><?php echo $row['email']; ?></td>
+                <td><?php echo $row['phone']; ?></td>
+                <td><?php echo $row['NoOfGuest']; ?></td>
                 <td>
                     <a href="edit_customer.php?customer_id=<?php echo $row['id']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
             </tr>
-            <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="confirm-delete-<?php echo $row['id']; ?>" role="dialog">
                 <div class="modal-dialog">
                     <form action="delete_customer.php" method="POST">
-                        <!-- Modal content -->
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>

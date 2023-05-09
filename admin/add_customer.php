@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once './config/config.php';
-require_once './includes/auth_validate.php';
+// require_once './includes/auth_validate.php';
 
 
 //serve POST method, After successful insert, redirect to customers.php page.
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $data_to_store['created_at'] = date('Y-m-d H:i:s');
     $db = getDbInstance();
     
-    $last_id = $db->insert('customers', $data_to_store);
+    // $last_id = $db->insert('customers', $data_to_store);
 
     if($last_id)
     {
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     }
     else
     {
-        echo 'insert failed: ' . $db->getLastError();
+        // echo 'insert failed: ' . $db->getLastError();
         exit();
     }
 }

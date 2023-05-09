@@ -52,14 +52,10 @@ require_once 'includes/header.php';
 $(document).ready(function(){
    $("#customer_form").validate({
        rules: {
-            f_name: {
+            username: {
                 required: true,
                 minlength: 3
             },
-            l_name: {
-                required: true,
-                minlength: 3
-            },   
         }
     });
 });

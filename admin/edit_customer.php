@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once './config/config.php';
-
+// require_once 'includes/auth_validate.php';
 
 
 // Sanitize if you want
@@ -40,12 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 
 //If edit variable is set, we are performing the update operation.
-// if($edit)
-// {
-//     $db->where('id', $customer_id);
-//     //Get data to pre-populate the form.
-//     $customer = $db->getOne("customers");
-// }
+if($edit)
+{
+    $queryEdit="SELECT * FROM `customer` WHERE `ID`=$customer_id";
+    //Get data to pre-populate the form.
+    $result=mysqli_query($connect,$queryEdit);
+    $customer =mysqli_fetch_array($result);
+}
 ?>
 
 
@@ -65,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         
         <?php
             //Include the common form for add and edit  
-            require_once('./forms/customer_form.php'); 
+            include_once('./forms/customer_form.php'); 
         ?>
     </form>
 </div>

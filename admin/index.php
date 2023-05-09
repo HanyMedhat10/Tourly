@@ -4,6 +4,34 @@ require_once './config/config.php';
 // require_once 'includes/auth_validate.php';
 // if($_SESSION["isLogin"]==true) header('Location:login.php');
 //Get DB instance. function is defined in config.php
+
+function clearAuthCookie() {
+
+	unset($_COOKIE['series_id']);
+	setcookie('series_id', null, -1, '/');
+
+}
+function randomString($n) {
+
+	$generated_string = "";
+
+	$domain = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+	$len = strlen($domain);
+
+	// Loop to create random string
+	for ($i = 0; $i < $n; $i++) {
+		// Generate a random index to pick characters
+		$index = rand(0, $len - 1);
+
+		// Concatenating the character
+		// in resultant string
+		$generated_string = $generated_string . $domain[$index];
+	}
+
+	return $generated_string;
+}
+$series_id = randomString(16);
 $connect = getDbInstance();
 if(isset($_SESSION['username']) && $_SESSION['username']==null)header('Location:login.php');
 $query="SELECT * FROM `customer`";

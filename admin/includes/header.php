@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +38,7 @@
         <div id="wrapper">
 
             <!-- Navigation -->
-            <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] == true): ?>
+            
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -92,6 +93,9 @@
                                     </ul>
                                 </li>
                                 <li>
+                                <a href="add_customer.php"><i class="fa fa-hotel"></i> Hotel</a> 
+                                </li>
+                                <li>
                                     <a href="admin_users.php"><i class="fa fa-users fa-fw"></i> Users</a>
                                 </li>
                             </ul>
@@ -100,5 +104,5 @@
                     </div>
                     <!-- /.navbar-static-side -->
                 </nav>
-            <?php endif;?>
+       
             <!-- The End of the Header -->

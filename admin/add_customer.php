@@ -11,12 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $data_to_store = array_filter($_POST);
 
     //Insert timestamp
-    $data_to_store['created_at'] = date('Y-m-d H:i:s');
-    $db = getDbInstance();
-    
+    //$data_to_store['created_at'] = date('Y-m-d H:i:s');
+    $connect = getDbInstance();
+    $query = "INSERT INTO `customer`(`username`, `email`, `phone`, `NoOfGuest`) VALUES ('".$data_to_store['username']."','".$data_to_store['email']."','".$data_to_store['phone']."','".$data_to_store['NoOfGuest']."')";
+    $result = mysqli_query($connect,$query);
     // $last_id = $db->insert('customers', $data_to_store);
 
-    if($last_id)
+    if($result)
     {
     	$_SESSION['success'] = "Customer added successfully!";
     	header('location: customers.php');

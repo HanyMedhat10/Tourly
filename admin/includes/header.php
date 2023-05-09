@@ -93,8 +93,21 @@
                                     </ul>
                                 </li>
                                 <li>
-                                <a href="add_customer.php"><i class="fa fa-hotel"></i> Hotel</a> 
-                                </li>
+                                    <a href="#"><i class="fa fa-building"></i> Hotel<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="hotel.php"><i class="fa fa-list fa-fw"></i>List all</a>
+                                        </li>
+                                    <li>
+                                        <a href="room.php"><i class="fa fa-hotel"></i> Room</a>
+                                    </li>
+                                    <li>
+                                        <a href="booking.php"><i class="fa fa-plane"></i> Booking</a>
+                                    </li>
+                                    <li>
+                                        <a href="add_hotel.php"><i class="fa fa-plus fa-fw"></i>Add New</a>
+                                    </li>
+                                    </ul>
                                 <li>
                                     <a href="admin_users.php"><i class="fa fa-users fa-fw"></i> Users</a>
                                 </li>

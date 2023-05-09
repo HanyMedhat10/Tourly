@@ -31,7 +31,7 @@ function paginationLinks($current_page, $total_pages, $base_url) {
 
 	if ($total_pages <= 1) {
 		return false;
-	}
+	}}
 //Get DB instance. i.e instance of MYSQLiDB Library
 $connect = getDbInstance();
 $query = 'SELECT `ID`, `username`, `email`, `phone`, `NoOfGuest` FROM `customer` WHERE ';

@@ -70,7 +70,7 @@ include BASE_PATH . '/includes/header.php';
         </div>
         <div class="col-lg-6">
             <div class="page-action-links text-right">
-                <a href="add_hotel.php?operation=create" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add new</a>
+                <a href="add_room.php?operation=create" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add new</a>
             </div>
         </div>
     </div>

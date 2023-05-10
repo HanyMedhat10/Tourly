@@ -70,7 +70,7 @@ include BASE_PATH . '/includes/header.php';
         </div>
         <div class="col-lg-6">
             <div class="page-action-links text-right">
-                <a href="add_hotel.php?operation=create" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add new</a>
+                <a href="add_booking.php?operation=create" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add new</a>
             </div>
         </div>
     </div>
@@ -106,7 +106,7 @@ include BASE_PATH . '/includes/header.php';
     </div>
     <hr>
     <div id="export-section">
-        <a href="export_hotels.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
+        <a href="export_bookings.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
     </div>
     <table class="table table-striped table-bordered table-condensed">
         <thead>
@@ -127,7 +127,7 @@ include BASE_PATH . '/includes/header.php';
                     <td><?php echo $row['checkOut']; ?></td>
                     <td><?php echo $row['HotelID']; ?></td>
                     <td>
-                        <a href="edit_hotel.php?hotel_id=<?php echo $row['RoomID']; ?>&operation=edit"
+                        <a href="edit_booking.php?booking_id=<?php echo $row['RoomID']; ?>&operation=edit"
                          class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                         <a href="#" class="btn btn-danger delete_btn" data-toggle="modal"
                          data-target="#confirm-delete-<?php echo $row['RoomID']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
@@ -135,7 +135,7 @@ include BASE_PATH . '/includes/header.php';
                 </tr>
                 <div class="modal fade" id="confirm-delete-<?php echo $row['RoomID']; ?>" role="dialog">
                     <div class="modal-dialog">
-                        <form action="delete_hotel.php" method="POST">
+                        <form action="delete_booking.php" method="POST">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>

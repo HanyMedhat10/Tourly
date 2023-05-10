@@ -135,7 +135,7 @@ include BASE_PATH . '/includes/header.php';
                 </tr>
                 <div class="modal fade" id="confirm-delete-<?php echo $row['RoomID']; ?>" role="dialog">
                     <div class="modal-dialog">
-                        <form action="delete_hotel.php" method="POST">
+                        <form action="delete_room.php" method="POST">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>

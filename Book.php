@@ -11,20 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $connect = getDbInstance();
     // $connect = mysqli_connect("localhost", "root", "", "tourly");
     $query = "INSERT INTO `customer`(`username`, `email`, `phone`, `NoOfGuest`) VALUES ('".$data_to_store['Name']."','".$data_to_store['Email']."','".$data_to_store['phone']."','".$data_to_store['people']."')";
-    $result = mysqli_query($connect,$query);
+    if (mysqli_query($connect,$query)){
+      header("Location: index.html");
+    }
   
 
-    // if($result)
-    // {
-    // 	$_SESSION['success'] = "Customer added successfully!";
-    // 	header('location: customers.php');
-    // 	exit();
-    // }
-    // else
-    // {
-    //     // echo 'insert failed: ' . $db->getLastError();
-    //     exit();
-    // }
 }
 ?>
 
@@ -215,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
       <section class="tour-search">
         <div class="container">
 
-          <form action="index.html" method="post" class="tour-search-form">
+          <form action="" method="post" class="tour-search-form">
 
             <div class="input-wrapper">
               <label for="Name" class="input-label">Your Name*</label>

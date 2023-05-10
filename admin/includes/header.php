@@ -99,7 +99,7 @@
                                             <a href="hotel.php"><i class="fa fa-list fa-fw"></i>List all</a>
                                         </li>
                                     <li>
-                                        <a href="room.php"><i class="fa fa-hotel"></i> Room</a>
+                                        <a href="rooms.php"><i class="fa fa-hotel"></i> Room</a>
                                     </li>
                                     <li>
                                         <a href="booking.php"><i class="fa fa-plane"></i> Booking</a>

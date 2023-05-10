@@ -1,10 +1,9 @@
 <?php
 session_start();
 require_once 'config/config.php';
-
+require 'admin/lib/Rooms/Rooms.php';
 // Hotel class
-require_once BASE_PATH . '/lib/Hotel/Hotel.php';
-$hotel = new Hotel();
+$room = new Rooms();
 
 // Get Input data from query string
 $search_string = filter_input(INPUT_GET, 'search_string');
@@ -85,7 +84,7 @@ include BASE_PATH . '/includes/header.php';
             <label for="input_order">Order By</label>
             <select name="filter_col" class="form-control">
                 <?php
-                foreach ($hotel->setOrderingValues() as $opt_value => $opt_name) : ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
+                foreach ($room->setOrderingValues() as $opt_value => $opt_name) : ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
                     echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
                 endforeach;
                 ?>

@@ -1,9 +1,9 @@
 <?php
 session_start();
 require_once 'config/config.php';
-require 'lib/Rooms/Rooms.php';
+require 'lib/Booking/Booking.php';
 // Hotel class
-$room = new Rooms();
+$booking = new Booking();
 
 // Get Input data from query string
 $search_string = filter_input(INPUT_GET, 'search_string');
@@ -35,13 +35,13 @@ function paginationLinks( $total_pages)
 }
 //Get DB instance. i.e instance of MYSQLiDB Library
 $connect = getDbInstance();
-$query = 'SELECT * FROM `room` ';
+$query = 'SELECT * FROM `room_customer` ';
 $result = mysqli_query($connect, $query);
 //Start building query according to input parameters.
 // If search string
 if ($search_string) {
     // search string name
-    $searchQ = "SELECT * FROM `room` WHERE `name` LIKE '$search_string'";
+    $searchQ = "$query WHERE `name` LIKE '$search_string'";
     $result = mysqli_query($connect, $searchQ);
 
     // $db->orwhere('l_name', '%' . $search_string . '%', 'like');
@@ -49,7 +49,7 @@ if ($search_string) {
 
 // If order by option selected
 if ($order_by) {
-    $orderQ = "SELECT * FROM `room` ORDER BY $filter_col $order_by";
+    $orderQ = "$query ORDER BY $filter_col $order_by";
 }
 
 // Set pagination limit
@@ -66,7 +66,7 @@ include BASE_PATH . '/includes/header.php';
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-6">
-            <h1 class="page-header">Rooms</h1>
+            <h1 class="page-header">Booking</h1>
         </div>
         <div class="col-lg-6">
             <div class="page-action-links text-right">
@@ -84,7 +84,7 @@ include BASE_PATH . '/includes/header.php';
             <label for="input_order">Order By</label>
             <select name="filter_col" class="form-control">
                 <?php
-                foreach ($room->setOrderingValues() as $opt_value => $opt_name) : ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
+                foreach ($booking ->setOrderingValues() as $opt_value => $opt_name) : ($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
                     echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
                 endforeach;
                 ?>
@@ -111,20 +111,20 @@ include BASE_PATH . '/includes/header.php';
     <table class="table table-striped table-bordered table-condensed">
         <thead>
             <tr>
-                <th width="15%">RoomID</th>
-                <th width="25%">Price</th>
-                <th width="30%">type Room</th>
-                <th width="20%">No Of Beds</th>
-                <th width="10%">HotelID</th>
+                <th width="15%">Room ID</th>
+                <th width="25%">Customer ID</th>
+                <th width="30%">check In</th>
+                <th width="20%">check Out</th>
+                <th width="10%">Hotel ID</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($rows as $row) : ?>
                 <tr>
                     <td><?php echo $row['RoomID']; ?></td>
-                    <td><?php echo $row['price'] ?></td>
-                    <td><?php echo $row['typeRoom']; ?></td>
-                    <td><?php echo $row['NoOfBeds']; ?></td>
+                    <td><?php echo $row['CustomerID'] ?></td>
+                    <td><?php echo $row['checkIn']; ?></td>
+                    <td><?php echo $row['checkOut']; ?></td>
                     <td><?php echo $row['HotelID']; ?></td>
                     <td>
                         <a href="edit_hotel.php?hotel_id=<?php echo $row['RoomID']; ?>&operation=edit"

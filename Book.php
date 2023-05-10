@@ -1,3 +1,32 @@
+<?php
+require'admin/config/config.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+{
+    //Mass Insert Data. Keep "name" attribute in html form same as column name in mysql table.
+    $data_to_store = array_filter($_POST);
+
+    //Insert timestamp
+    //$data_to_store['created_at'] = date('Y-m-d H:i:s');
+    $connect = getDbInstance();
+    // $connect = mysqli_connect("localhost", "root", "", "tourly");
+    $query = "INSERT INTO `customer`(`username`, `email`, `phone`, `NoOfGuest`) VALUES ('".$data_to_store['Name']."','".$data_to_store['Email']."','".$data_to_store['phone']."','".$data_to_store['people']."')";
+    $result = mysqli_query($connect,$query);
+  
+
+    // if($result)
+    // {
+    // 	$_SESSION['success'] = "Customer added successfully!";
+    // 	header('location: customers.php');
+    // 	exit();
+    // }
+    // else
+    // {
+    //     // echo 'insert failed: ' . $db->getLastError();
+    //     exit();
+    // }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -142,7 +171,7 @@
 
         </nav>
 
-        <a href="Book.html"> <button class="btn btn-primary">Book Now</button></a>
+        <a href="Book.php"> <button class="btn btn-primary">Book Now</button></a>
 
       </div>
     </div>
@@ -185,7 +214,7 @@
       <section class="tour-search">
         <div class="container">
 
-          <form action="" class="tour-search-form">
+          <form action="index.html" method="post" class="tour-search-form">
 
             <div class="input-wrapper">
               <label for="Name" class="input-label">Your Name*</label>
@@ -212,17 +241,6 @@
               <input type="number" name="people" id="people" required placeholder="No.of People" class="input-field">
             </div>
 
-            <div class="input-wrapper">
-              <label for="checkin" class="input-label">Checkin Date**</label>
-
-              <input type="date" name="checkin" id="checkin" required class="input-field">
-            </div>
-
-            <div class="input-wrapper">
-              <label for="checkout" class="input-label">Checkout Date*</label>
-
-              <input type="date" name="checkout" id="checkout" required class="input-field">
-            </div>
 
             <button type="submit" class="btn btn-secondary">submit now</button>
 

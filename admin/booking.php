@@ -127,7 +127,7 @@ include BASE_PATH . '/includes/header.php';
                     <td><?php echo $row['checkOut']; ?></td>
                     <td><?php echo $row['HotelID']; ?></td>
                     <td>
-                        <a href="edit_booking.php?booking_id=<?php echo $row['RoomID']; ?>&operation=edit"
+                        <a href="edit_booking.php?booking_id=<?php echo $row['RoomID']?>&_id=<?php echo $row['CustomerID'];  ?>&operation=edit"
                          class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                         <a href="#" class="btn btn-danger delete_btn" data-toggle="modal"
                          data-target="#confirm-delete-<?php echo $row['RoomID']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
@@ -143,6 +143,10 @@ include BASE_PATH . '/includes/header.php';
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="del_id" id="del_id" value="<?php echo $row['RoomID']; ?>">
+                                    <p>Are you sure you want to delete this row?</p>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="del_id2" id="del_id2" value="<?php echo $row['CustomerID']; ?>">
                                     <p>Are you sure you want to delete this row?</p>
                                 </div>
                                 <div class="modal-footer">

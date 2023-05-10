@@ -127,7 +127,7 @@ include BASE_PATH . '/includes/header.php';
                     <td><?php echo $row['NoOfBeds']; ?></td>
                     <td><?php echo $row['HotelID']; ?></td>
                     <td>
-                        <a href="edit_hotel.php?hotel_id=<?php echo $row['RoomID']; ?>&operation=edit"
+                        <a href="edit_room.php?room_id=<?php echo $row['RoomID']; ?>&operation=edit"
                          class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                         <a href="#" class="btn btn-danger delete_btn" data-toggle="modal"
                          data-target="#confirm-delete-<?php echo $row['RoomID']; ?>"><i class="glyphicon glyphicon-trash"></i></a>

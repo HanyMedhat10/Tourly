@@ -4,6 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     //Mass Insert Data. Keep "name" attribute in html form same as column name in mysql table.
     $data_to_store = array_filter($_POST);
+    // $data_to_store = $_POST;
 
     //Insert timestamp
     //$data_to_store['created_at'] = date('Y-m-d H:i:s');
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tourly - Travel agancy</title>
+  <title>Tourly - Travel agency</title>
 
   <!-- 
     - favicon
@@ -206,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         </div>
       </section>
 
-        <!-- regester -->
+        <!-- register -->
         <!--      
         - #TOUR SEARCH
       -->
@@ -219,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             <div class="input-wrapper">
               <label for="Name" class="input-label">Your Name*</label>
 
-              <input type="text" name="Name" id="destination" required placeholder="Enter Your Name"
+              <input type="text" name="Name" id="Name" required placeholder="Enter Your Name"
                 class="input-field">
             </div>
             <div class="input-wrapper">

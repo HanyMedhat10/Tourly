@@ -41,7 +41,7 @@ $result = mysqli_query($connect, $query);
 // If search string
 if ($search_string) {
     // search string name
-    $searchQ = "$query WHERE `name` LIKE '$search_string'";
+    $searchQ = "$query WHERE `name` LIKE '$search_string%'";
     $result = mysqli_query($connect, $searchQ);
 
     // $db->orwhere('l_name', '%' . $search_string . '%', 'like');
@@ -50,6 +50,7 @@ if ($search_string) {
 // If order by option selected
 if ($order_by) {
     $orderQ = "$query ORDER BY $filter_col $order_by";
+    // $result = mysqli_query($connect, $orderQ);
 }
 
 // Set pagination limit

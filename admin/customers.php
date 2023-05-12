@@ -22,7 +22,7 @@ if (!$page) {
 
 // If filter types are not selected we show latest added data first
 if (!$filter_col) {
-    $filter_col = 'id';
+    $filter_col = 'ID';
 }
 if (!$order_by) {
     $order_by = 'Desc';

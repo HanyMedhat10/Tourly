@@ -21,7 +21,7 @@ if (!$page) {
 
 // If filter types are not selected we show latest added data first
 if (!$filter_col) {
-    $filter_col = 'id';
+    $filter_col = 'RoomID';
 }
 if (!$order_by) {
     $order_by = 'Desc';
@@ -50,7 +50,7 @@ if ($search_string) {
 // If order by option selected
 if ($order_by) {
     $orderQ = "$query ORDER BY $filter_col $order_by";
-    // $result = mysqli_query($connect, $orderQ);
+    $result = mysqli_query($connect, $orderQ);
 }
 
 // Set pagination limit

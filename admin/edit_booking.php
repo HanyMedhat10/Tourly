@@ -1,13 +1,13 @@
 <?php
 session_start();
 require_once './config/config.php';
-require_once 'includes/auth_validate.php';
+// require_once 'includes/auth_validate.php';
 
 
 // Sanitize if you want
 $booking_id = filter_input(INPUT_GET, 'booking_id', FILTER_VALIDATE_INT);
 $_id = filter_input(INPUT_GET, '_id', FILTER_VALIDATE_INT);
-$operation = filter_input(INPUT_GET, 'operation'); 
+$operation = filter_input(INPUT_GET, 'operation'); // here is problem in edit
 ($operation == 'edit') ? $edit = true : $edit = false;
  $connect = getDbInstance();
 
@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     //Get booking id form query string parameter.
     $booking_id = filter_input(INPUT_GET, 'booking_id', FILTER_VALIDATE_INT);
+    $_id = filter_input(INPUT_GET, '_id', FILTER_VALIDATE_INT);
+    
 
     //Get input data
     $data_to_update = filter_input_array(INPUT_POST);
@@ -43,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //If edit variable is set, we are performing the update operation.
 if($edit)
 {
-    $queryEdit="SELECT * FROM `room_customer` WHERE `CustomerID`=$booking_id";
+    $queryEdit="SELECT * FROM `room_customer` WHERE `CustomerID`=$_id AND `RoomID`=$booking_id";
     //Get data to pre-populate the form.
     $result=mysqli_query($connect,$queryEdit);
     $booking =mysqli_fetch_array($result);

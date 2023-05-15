@@ -25,24 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         header('location: admin_users.php');
         exit();
     }
-    // if($connect->count >=1){
-    //     $_SESSION['failure'] = "User name already exists";
-    //     header('location: add_admin.php');
-    //     exit();
-    // }
-
-    // //Encrypt password
-    // $data_to_store['password'] = password_hash($data_to_store['password'],PASSWORD_DEFAULT);
-    // //reset conn$connect instance
-    // $connect = getDbInstance();
-    // $last_id = $connect->insert ('admin', $data_to_store);
-    // if($last_id)
-    // {
-
-    // 	$_SESSION['success'] = "Admin user added successfully!";
-    // 	header('location: admin_users.php');
-    // 	exit();
-    // }  
     
 }
 

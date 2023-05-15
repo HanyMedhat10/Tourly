@@ -1,5 +1,5 @@
 <?php
-require'admin/config/config.php';
+require 'admin/config/config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
     //Mass Insert Data. Keep "name" attribute in html form same as column name in mysql table.
@@ -9,10 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     //Insert timestamp
     //$data_to_store['created_at'] = date('Y-m-d H:i:s');
     $connect = getDbInstance();
+    $Success = false;
     // $connect = mysqli_connect("localhost", "root", "", "tourly");
     $query = "INSERT INTO `customer`(`username`, `email`, `phone`, `NoOfGuest`) VALUES ('".$data_to_store['Name']."','".$data_to_store['Email']."','".$data_to_store['phone']."','".$data_to_store['people']."')";
     if (mysqli_query($connect,$query)){
-      header("Location: index.html");
+      $Success=true;
+      // header("Location: index.html");
     }
   
 
@@ -202,7 +204,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         <!--      
         - #TOUR SEARCH
       -->
-
       <section class="tour-search">
         <div class="container">
 
@@ -366,8 +367,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
   <!-- 
     - ionicon link
   -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <?php
+  if ($Success) {
+    
+  echo ' <script>
+      swal({
+      title: "Good job!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "success!",
+    });
+    </script>';
+    $Success=false;
+    // header("Location: index.html");
+  }
+  ?>
 
 </body>
 

@@ -1,68 +1,61 @@
 <?php
 session_start();
 require_once './config/config.php';
-require_once 'includes/auth_validate.php';
+// require_once 'includes/auth_validate.php';
 
 //User ID for which we are performing operation
 $admin_user_id = filter_input(INPUT_GET, 'admin_user_id');
-$operation = filter_input(INPUT_GET, 'operation', FILTER_SANITIZE_STRING);
+$operation = filter_input(INPUT_GET, 'operation');
 ($operation == 'edit') ? $edit = true : $edit = false;
 //Serve POST request.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// If non-super user accesses this script via url. Stop the exexution
-	if ($_SESSION['admin_type'] !== 'super') {
-		// show permission denied message
-		echo 'Permission Denied';
-		exit();
-	}
+	// if ($_SESSION['admin_type'] !== 'super') {
+	// 	// show permission denied message
+	// 	echo 'Permission Denied';
+	// 	exit();
+	// }
 
 	// Sanitize input post if we want
 	$data_to_update = filter_input_array(INPUT_POST);
 	//Check whether the user name already exists ;
-	$db = getDbInstance();
-	$db->where('user_name', $data_to_update['user_name']);
-	$db->where('id', $admin_user_id, '!=');
-	//print_r($data_to_update['user_name']);die();
-	$row = $db->getOne('admin_accounts');
-	//print_r($data_to_update['user_name']);
+	$connect = getDbInstance();
+	$query ="UPDATE `admin` SET `username`='".$data_to_update['username']."',`password`='".$data_to_update['password']."',`admin_type`='".$data_to_update['admin_type']."' WHERE `ID`=$admin_user_id";
+	$result = mysqli_query($connect,$query);
+	// $db->where('username', $data_to_update['username']);
+	// $db->where('id', $admin_user_id, '!=');
+	//print_r($data_to_update['username']);die();
+	// $row = $db->getOne('admin_accounts');
+
+	//print_r($data_to_update['username']);
 	//print_r($row); die();
 
-	if (!empty($row['user_name'])) {
+    if($result)
+    {
+        $_SESSION['success'] = "Admin updated successfully!";
+        //Redirect to the listing page,
+        header('location:admin_users.php');
+        //Important! Don't execute the rest put the exit/die. 
+        exit();
+    }
+}
 
-		$_SESSION['failure'] = "User name already exists";
 
-		$query_string = http_build_query(array(
-			'admin_user_id' => $admin_user_id,
-			'operation' => $operation,
-		));
-		header('location: edit_admin.php?'.$query_string );
-		exit;
-	}
-
-	$admin_user_id = filter_input(INPUT_GET, 'admin_user_id', FILTER_VALIDATE_INT);
-	//Encrypting the password
-	$data_to_update['password'] = password_hash($data_to_update['password'], PASSWORD_DEFAULT);
-
-	$db = getDbInstance();
-	$db->where('id', $admin_user_id);
-	$stat = $db->update('admin_accounts', $data_to_update);
-
-	if ($stat) {
-		$_SESSION['success'] = "Admin user has been updated successfully";
-	} else {
-		$_SESSION['failure'] = "Failed to update Admin user : " . $db->getLastError();
-	}
-
-	header('location: admin_users.php');
-	exit;
-
+//If edit variable is set, we are performing the update operation.
+if($edit)
+{
+	$connect = getDbInstance();
+    $queryEdit="SELECT * FROM `admin` WHERE `ID`=$admin_user_id";
+    //Get data to pre-populate the form.
+    $result=mysqli_query($connect,$queryEdit);
+    $admin_account =mysqli_fetch_array($result);
 }
 
 //Select where clause
-$db = getDbInstance();
-$db->where('id', $admin_user_id);
+// $db = getDbInstance();
+// $db->where('id', $admin_user_id);
 
-$admin_account = $db->getOne("admin_accounts");
+// $admin_account = $db->getOne("admin");
 
 // Set values to $row
 

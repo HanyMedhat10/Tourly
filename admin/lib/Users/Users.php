@@ -21,8 +21,9 @@ class Users
     public function setOrderingValues()
     {
         $ordering = [
-            'id' => 'ID',
-            'user_name' => 'User Name',
+            'ID' => 'ID',
+            'username' => 'User Name',
+            'password' => 'Password',
             'admin_type' => 'Admin Type'
         ];
 

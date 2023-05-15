@@ -1,19 +1,18 @@
 <?php
 session_start();
 require_once 'config/config.php';
-require_once BASE_PATH.'/includes/auth_validate.php';
 
 // Users class
 require_once BASE_PATH.'/lib/Users/Users.php';
 $users = new Users();
 
 // Only super admin is allowed to access this page
-if ($_SESSION['admin_type'] !== 'super')
-{
-    // Show permission denied message
-    header('HTTP/1.1 401 Unauthorized', true, 401);
-    exit('401 Unauthorized');
-}
+// if ($_SESSION['admin_type'] !== 'super')
+// {
+//     // Show permission denied message
+//     header('HTTP/1.1 401 Unauthorized', true, 401);
+//     exit('401 Unauthorized');
+// }
 
 // Get Input data from query string
 $search_string = filter_input(INPUT_GET, 'search_string');
@@ -22,7 +21,7 @@ $order_by = filter_input(INPUT_GET, 'order_by');
 $del_id = filter_input(INPUT_GET, 'del_id');
 
 // Per page limit for pagination.
-$pagelimit = 20;
+$pageLimit = 20;
 
 // Get current page.
 $page = filter_input(INPUT_GET, 'page');
@@ -34,7 +33,7 @@ if (!$page)
 // If filter types are not selected we show latest added data first
 if (!$filter_col)
 {
-    $filter_col = 'id';
+    $filter_col = 'ID';
 }
 if (!$order_by)
 {
@@ -42,28 +41,27 @@ if (!$order_by)
 }
 
 //Get DB instance. i.e instance of MYSQLiDB Library
-$db = getDbInstance();
-$select = array('id', 'user_name', 'admin_type');
-
+$connect = getDbInstance();
+$query="SELECT `ID`, `username`, `password`, `admin_type` FROM `admin`";
+$result = mysqli_query($connect, $query);
 //Start building query according to input parameters.
 // If search string
 if ($search_string)
 {
-    $db->where('user_name', '%' . $search_string . '%', 'like');
+    $searchQ = "$query WHERE `username` LIKE '$search_string%'";
+    $result = mysqli_query($connect, $searchQ);
 }
 
 //If order by option selected
 if ($order_by)
 {
-    $db->orderBy($filter_col, $order_by);
+    $searchQ = "$query ORDER BY $filter_col $order_by";
+    $result = mysqli_query($connect, $searchQ);
 }
 
-// Set pagination limit
-$db->pageLimit = $pagelimit;
-
-// Get result of the query.
-$rows = $db->arraybuilder()->paginate('admin_accounts', $page, $select);
-$total_pages = $db->totalPages;
+$noRows = mysqli_num_rows($result);
+$rows = $result;
+$total_pages = $noRows / $pageLimit;
 
 include BASE_PATH.'/includes/header.php';
 ?>
@@ -92,7 +90,7 @@ include BASE_PATH.'/includes/header.php';
     <div class="well text-center filter-form">
         <form class="form form-inline" action="">
             <label for="input_search">Search</label>
-            <input type="text" class="form-control" id="input_search" name="search_string" value="<?php echo htmlspecialchars($search_string, ENT_QUOTES, 'UTF-8'); ?>">
+            <input type="text" class="form-control" id="input_search" name="search_string" value="">
             <label for="input_order">Order By</label>
             <select name="filter_col" class="form-control">
                 <?php
@@ -124,25 +122,25 @@ include BASE_PATH.'/includes/header.php';
     <table class="table table-striped table-bordered table-condensed">
         <thead>
             <tr>
-                <th width="5%">ID</th>
+                <th width="15%">ID</th>
                 <th width="45%">Name</th>
                 <th width="40%">Admin type</th>
-                <th width="10%">Actions</th>
+                <!-- <th width="10%">Actions</th> -->
             </tr>
         </thead>
         <tbody>
             <?php foreach ($rows as $row): ?>
             <tr>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo htmlspecialchars($row['user_name']); ?></td>
+                <td><?php echo $row['ID']; ?></td>
+                <td><?php echo htmlspecialchars($row['username']); ?></td>
                 <td><?php echo htmlspecialchars($row['admin_type']); ?></td>
                 <td>
-                    <a href="edit_admin.php?admin_user_id=<?php echo $row['id']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
-                    <a href="#" class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
+                    <a href="edit_admin.php?admin_user_id=<?php echo $row['ID']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="#" class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['ID']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
             </tr>
             <!-- Delete Confirmation Modal -->
-            <div class="modal fade" id="confirm-delete-<?php echo $row['id']; ?>" role="dialog">
+            <div class="modal fade" id="confirm-delete-<?php echo $row['ID']; ?>" role="dialog">
                 <div class="modal-dialog">
                     <form action="delete_user.php" method="POST">
                         <!-- Modal content -->
@@ -152,7 +150,7 @@ include BASE_PATH.'/includes/header.php';
                                 <h4 class="modal-title">Confirm</h4>
                             </div>
                             <div class="modal-body">
-                                <input type="hidden" name="del_id" id="del_id" value="<?php echo $row['id']; ?>">
+                                <input type="hidden" name="del_id" id="del_id" value="<?php echo $row['ID']; ?>">
                                 <p>Are you sure you want to delete this row?</p>
                             </div>
                             <div class="modal-footer">

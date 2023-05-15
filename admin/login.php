@@ -1,8 +1,7 @@
 <?php
 session_start();
 require_once 'config/config.php';
-// $token = bin2hex(openssl_random_pseudo_bytes(16));
-// // If User has already logged in, redirect to dashboard page.
+// If User has already logged in, redirect to dashboard page.
 if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === TRUE)
 {
 	header('Location:index.php');
@@ -29,6 +28,7 @@ $password=$_POST['passwd'];
         // $_SESSION["isLogin"] = true;
 		// echo $row['username'];
 		$_SESSION['user_logged_in'] = TRUE;
+		$_SESSION['admin_type'] = $row['admin_type'];
         header("Location:index.php");
         exit;
     }else {

@@ -1,42 +1,48 @@
 <?php
 session_start();
 require_once './config/config.php';
-require_once 'includes/auth_validate.php';
+// require_once 'includes/auth_validate.php';
 
 //Only super admin is allowed to access this page
-if ($_SESSION['admin_type'] !== 'super') {
-    // show permission denied message
-    echo 'Permission Denied';
-    exit();
-}
+// if ($_SESSION['admin_type'] !== 'super') {
+//     // show permission denied message
+//     echo 'Permission Denied';
+//     exit();
+// }
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
 {
 	$data_to_store = filter_input_array(INPUT_POST);
-    $db = getDbInstance();
+    $connect = getDbInstance();
     //Check whether the user name already exists ; 
-    $db->where('user_name',$data_to_store['user_name']);
-    $db->get('admin_accounts');
-    
-    if($db->count >=1){
-        $_SESSION['failure'] = "User name already exists";
-        header('location: add_admin.php');
+    $query="INSERT INTO `admin`(`username`, `password`, `admin_type`) VALUES ('".$data_to_store['username']."','".$data_to_store['password']."','".$data_to_store['admin_type']."')";
+    // $connect->where('username',$data_to_store['username']);
+    // $connect->get('admin');
+    $result=mysqli_query($connect,$query);
+    if ($result) {
+        $_SESSION['success'] = "Admin user added successfully!";
+        header('location: admin_users.php');
         exit();
     }
+    // if($connect->count >=1){
+    //     $_SESSION['failure'] = "User name already exists";
+    //     header('location: add_admin.php');
+    //     exit();
+    // }
 
-    //Encrypt password
-    $data_to_store['password'] = password_hash($data_to_store['password'],PASSWORD_DEFAULT);
-    //reset db instance
-    $db = getDbInstance();
-    $last_id = $db->insert ('admin_accounts', $data_to_store);
-    if($last_id)
-    {
+    // //Encrypt password
+    // $data_to_store['password'] = password_hash($data_to_store['password'],PASSWORD_DEFAULT);
+    // //reset conn$connect instance
+    // $connect = getDbInstance();
+    // $last_id = $connect->insert ('admin', $data_to_store);
+    // if($last_id)
+    // {
 
-    	$_SESSION['success'] = "Admin user added successfully!";
-    	header('location: admin_users.php');
-    	exit();
-    }  
+    // 	$_SESSION['success'] = "Admin user added successfully!";
+    // 	header('location: admin_users.php');
+    // 	exit();
+    // }  
     
 }
 

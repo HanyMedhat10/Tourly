@@ -1,4 +1,5 @@
 <?php
+$Success = false;
 require 'admin/config/config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
@@ -9,10 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     //Insert timestamp
     //$data_to_store['created_at'] = date('Y-m-d H:i:s');
     $connect = getDbInstance();
-    $Success = false;
+    $i=0;
     // $connect = mysqli_connect("localhost", "root", "", "tourly");
     $query = "INSERT INTO `customer`(`username`, `email`, `phone`, `NoOfGuest`) VALUES ('".$data_to_store['Name']."','".$data_to_store['Email']."','".$data_to_store['phone']."','".$data_to_store['people']."')";
     if (mysqli_query($connect,$query)){
+      $i++;
       $Success=true;
       // header("Location: index.html");
     }
@@ -371,7 +373,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <?php
-  if ($Success) {
+  // if (isset($Success)) {
+  //   $Success=false;
+  // }
+  if ($Success &&$i==1) {
     
   echo ' <script>
       swal({

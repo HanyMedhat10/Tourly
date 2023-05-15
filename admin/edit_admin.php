@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$data_to_update = filter_input_array(INPUT_POST);
 	//Check whether the user name already exists ;
 	$connect = getDbInstance();
-	$query ="UPDATE `admin` SET `username`='".$data_to_update['username']."',`password`='".$data_to_update['password']."',`admin_type`='".$data_to_update['admin_type']."' WHERE `ID`=$admin_user_id";
+	$query ="UPDATE `admin` SET `username`='".$data_to_update['username']."',`password`='".$data_to_update['password']."' WHERE `ID`=$admin_user_id";
 	$result = mysqli_query($connect,$query);
 	// $db->where('username', $data_to_update['username']);
 	// $db->where('id', $admin_user_id, '!=');

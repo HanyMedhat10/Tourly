@@ -28,7 +28,6 @@ $password=$_POST['passwd'];
         // $_SESSION["isLogin"] = true;
 		// echo $row['username'];
 		$_SESSION['user_logged_in'] = TRUE;
-		$_SESSION['admin_type'] = $row['admin_type'];
         header("Location:index.php");
         exit;
     }else {

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	$data_to_store = filter_input_array(INPUT_POST);
     $connect = getDbInstance();
     //Check whether the user name already exists ; 
-    $query="INSERT INTO `admin`(`username`, `password`, `admin_type`) VALUES ('".$data_to_store['username']."','".$data_to_store['password']."','".$data_to_store['admin_type']."')";
+    $query="INSERT INTO `admin`( `username`, `password`) VALUES ('".$data_to_store['username']."','".$data_to_store['password']."')";
     // $connect->where('username',$data_to_store['username']);
     // $connect->get('admin');
     $result=mysqli_query($connect,$query);

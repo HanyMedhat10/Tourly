@@ -42,7 +42,7 @@ if (!$order_by)
 
 //Get DB instance. i.e instance of MYSQLiDB Library
 $connect = getDbInstance();
-$query="SELECT `ID`, `username`, `password`, `admin_type` FROM `admin`";
+$query="SELECT `ID`, `username`, `password` FROM `admin`";
 $result = mysqli_query($connect, $query);
 //Start building query according to input parameters.
 // If search string
@@ -124,7 +124,7 @@ include BASE_PATH.'/includes/header.php';
             <tr>
                 <th width="15%">ID</th>
                 <th width="45%">Name</th>
-                <th width="40%">Admin type</th>
+                <th width="40%">password</th>
                 <!-- <th width="10%">Actions</th> -->
             </tr>
         </thead>
@@ -133,7 +133,7 @@ include BASE_PATH.'/includes/header.php';
             <tr>
                 <td><?php echo $row['ID']; ?></td>
                 <td><?php echo htmlspecialchars($row['username']); ?></td>
-                <td><?php echo htmlspecialchars($row['admin_type']); ?></td>
+                <td><?php echo htmlspecialchars($row['password']); ?></td>
                 <td>
                     <a href="edit_admin.php?admin_user_id=<?php echo $row['ID']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['ID']; ?>"><i class="glyphicon glyphicon-trash"></i></a>

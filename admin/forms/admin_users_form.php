@@ -21,23 +21,6 @@
             </div>
         </div>
     </div>
-    <!-- radio checks -->
-    <div class="form-group">
-        <label class="col-md-4 control-label">User type</label>
-        <div class="col-md-4">
-            <div class="radio">
-                <label>
-                    <?php //echo $admin_account['admin_type'] ?>
-                    <input type="radio" name="admin_type" value="super" required="" <?php echo ($edit && $admin_account['admin_type'] =='super') ? "checked": "" ; ?>/> Super admin
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="admin_type" value="admin" required="" <?php echo ($edit && $admin_account['admin_type'] =='admin') ? "checked": "" ; ?>/> Admin
-                </label>
-            </div>
-        </div>
-    </div>
     <!-- Button -->
     <div class="form-group">
         <label class="col-md-4 control-label"></label>

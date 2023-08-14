@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2023 at 02:39 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Aug 14, 2023 at 01:05 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,6 +33,7 @@ CREATE TABLE `admin` (
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -45,10 +46,13 @@ CREATE TABLE `customer` (
   `email` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(11) NOT NULL,
   `NoOfGuest` int(10) DEFAULT NULL,
-  `ManagmentID` int(6) NOT NULL
+  `ManagmentID` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `customer`
+--
+
 
 --
 -- Table structure for table `hotel`
@@ -56,14 +60,12 @@ CREATE TABLE `customer` (
 
 CREATE TABLE `hotel` (
   `HotelID` int(6) NOT NULL,
-  `managementID` int(6) NOT NULL,
+  `managementID` int(6) NOT NULL DEFAULT 1,
   `name` varchar(20) NOT NULL,
   `address` varchar(255) NOT NULL,
   `NoOfRooms` int(6) NOT NULL,
   `docs` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `room`
@@ -73,9 +75,14 @@ CREATE TABLE `room` (
   `RoomID` int(6) NOT NULL,
   `NoOfBeds` int(10) NOT NULL,
   `price` float NOT NULL,
-  `typeRoom` varchar(6) NOT NULL,
-  `HotelID` int(6) NOT NULL
+  `typeRoom` varchar(20) NOT NULL,
+  `HotelID` int(6) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `room`
+--
+
 
 -- --------------------------------------------------------
 
@@ -88,8 +95,12 @@ CREATE TABLE `room_customer` (
   `CustomerID` int(6) NOT NULL,
   `checkIn` date NOT NULL,
   `checkOut` date NOT NULL,
-  `HotelID` int(6) NOT NULL
+  `HotelID` int(6) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `room_customer`
+--
 
 --
 -- Indexes for dumped tables
@@ -138,25 +149,25 @@ ALTER TABLE `room_customer`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `ID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `ID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `HotelID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `HotelID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `RoomID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `RoomID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
